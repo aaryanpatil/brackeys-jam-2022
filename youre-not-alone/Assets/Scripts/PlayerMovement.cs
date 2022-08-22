@@ -18,11 +18,15 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 smoothInputVelocity;
 
     Rigidbody2D rb2d;
+    CircleCollider2D feetCollider;
+    Animator animator;
     
 
     void Awake() 
     {
         rb2d = GetComponentInChildren<Rigidbody2D>();
+        feetCollider = GetComponent<CircleCollider2D>();
+        animator = GetComponent<Animator>();
     }
     void FixedUpdate()
     { 
@@ -43,15 +47,15 @@ public class PlayerMovement : MonoBehaviour
     {
         currentInputVector = Vector2.SmoothDamp(currentInputVector, moveInput, ref smoothInputVelocity, smoothInputSpeed);
         Vector2 playerVelocity = new Vector2(currentInputVector.x * runSpeed *  Time.fixedDeltaTime, rb2d.velocity.y);
-        rb2d.velocity = playerVelocity; 
-    }
+        rb2d.velocity = playerVelocity;
 
-    void OnJump(InputValue value)
-    {
-        if (value.isPressed && jumpCount == 1)
+        if(moveInput.x > 0 || moveInput.x < 0) 
         {
-            rb2d.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            jumpCount--;
+            animator.SetBool("IsRunning", true);
+        }
+        else
+        {
+            animator.SetBool("IsRunning", false);
         }
     }
 
@@ -63,12 +67,39 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void OnJump(InputValue value)
+    {
+        Debug.Log(jumpCount);
+        if (value.isPressed && jumpCount == 1)
+        {
+            rb2d.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            jumpCount = 0;
+        }
+    }
+
+
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Ground");
             jumpCount = 1;
         }
     } 
+
+    private void OnTriggerStay2D(Collider2D other) 
+    {
+        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player"))
+        {
+            jumpCount = 1;
+        }
+    } 
+
+    private void OnTriggerExit2D(Collider2D other) 
+    {
+        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player"))
+        {
+            jumpCount = 0;
+        }
+    } 
+
 }
