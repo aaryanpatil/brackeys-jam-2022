@@ -6,6 +6,8 @@ public class Player1Movement : MonoBehaviour
     [Header("Horizontal Movement")]
 
     [SerializeField] float runSpeed = 400f;
+    [SerializeField] private float normalSmoothInputSpeed = 0.08f;
+    [SerializeField] private float slowSmoothInputSpeed = 0.08f;
     [SerializeField] private float smoothInputSpeed = 0.08f;
    
 
@@ -98,7 +100,13 @@ public class Player1Movement : MonoBehaviour
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player"))
         {
             jumpCount = 1;
+            smoothInputSpeed = normalSmoothInputSpeed;
             animator.SetBool("IsJumping", false);
+        }
+
+        if (other.gameObject.CompareTag("Ice"))
+        {
+           smoothInputSpeed = slowSmoothInputSpeed;
         }
     } 
 
@@ -107,7 +115,13 @@ public class Player1Movement : MonoBehaviour
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player"))
         {
             jumpCount = 1;
+            smoothInputSpeed = normalSmoothInputSpeed;
             animator.SetBool("IsJumping", false);
+        }
+
+        if (other.gameObject.CompareTag("Ice"))
+        {
+            smoothInputSpeed = slowSmoothInputSpeed;
         }
     } 
 

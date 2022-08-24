@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Ice
   layers:
   - Default
   - TransparentFX
@@ -12,10 +13,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
+  - Player 1
   - Ground
-  - 
-  - 
+  - Player 2
+  - Ice
   - 
   - 
   - 
@@ -42,9 +43,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 2452561329
+    locked: 0
   - name: Ground
     uniqueID: 1650054431
     locked: 0
-  - name: Player
+  - name: Ice
+    uniqueID: 3609122379
+    locked: 0
+  - name: Player 1
     uniqueID: 2279558753
+    locked: 0
+  - name: Player 2
+    uniqueID: 1562205719
     locked: 0
