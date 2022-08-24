@@ -1384,7 +1384,7 @@ GameObject:
   m_Component:
   - component: {fileID: 670623810}
   - component: {fileID: 670623814}
-  - component: {fileID: 670623809}
+  - component: {fileID: 670623817}
   - component: {fileID: 670623816}
   - component: {fileID: 670623808}
   - component: {fileID: 670623811}
@@ -1428,21 +1428,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &670623809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670623807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b053e622729648c42af1e4f5de6e7563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runSpeed: 350
-  smoothInputSpeed: 0.05
-  jumpForce: 23
 --- !u!4 &670623810
 Transform:
   m_ObjectHideFlags: 0
@@ -1618,6 +1603,23 @@ MonoBehaviour:
   onLeftWall: 0
   onRightWall: 0
   wallSide: -1
+--- !u!114 &670623817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670623807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15f17c54406c8144a935aeab3007286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runSpeed: 300
+  smoothInputSpeed: 0.08
+  smoothClimbInputSpeed: 0.04
+  climbSpeed: 400
+  jumpForce: 23
 --- !u!1 &1049629520
 GameObject:
   m_ObjectHideFlags: 0

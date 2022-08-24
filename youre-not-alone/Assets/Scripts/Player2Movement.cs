@@ -1,25 +1,32 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class Player2Movement : MonoBehaviour
 {
     [Header("Horizontal Movement")]
 
     [SerializeField] float runSpeed = 400f;
     [SerializeField] private float smoothInputSpeed = 0.08f;
+    [SerializeField] private float smoothClimbInputSpeed = 0.04f;
+    [SerializeField] float climbSpeed = 400f;
 
     [Header("Jumping")]
     [SerializeField] float jumpForce = 700f;
     int jumpCount = 1;
 
     Vector2 moveInput;
+    Vector2 climbInput;
 
     private Vector2 currentInputVector;
     private Vector2 smoothInputVelocity;
+    private Vector2 currentClimbInputVector;
+    private Vector2 smoothClimbInputVelocity;
 
     Rigidbody2D rb2d;
     CircleCollider2D feetCollider;
     Animator animator;
+
+    WallInteract wallInteract;
     
 
     void Awake() 
@@ -27,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         feetCollider = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
+        wallInteract = GetComponent<WallInteract>();
     }
     void FixedUpdate()
     { 
@@ -37,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     {
         FlipSprite();
         CancelJumpAnimation();
+        if (wallInteract == null) { return; }
+        Climb();
     }
 
     void OnMove(InputValue value)
@@ -67,17 +77,37 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector2 (Mathf.Sign(moveInput.x), 1f);
         }
+
+        if (wallInteract.onLeftWall)
+        {
+            transform.localScale = new Vector2 (-1f, 1f);
+        }
+        else if (wallInteract.onRightWall)
+        {
+            transform.localScale = new Vector2 (1f, 1f);
+        }
     }
 
     void OnJump(InputValue value)
     {
-        if (value.isPressed && jumpCount == 1)
+        if(wallInteract.onWall) { return; }
+
+        if (value.isPressed && jumpCount == 1 && !wallInteract.onWall)
         {
             rb2d.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             animator.SetBool("IsJumping", true);
             animator.SetBool("IsRunning", false);
             jumpCount = 0;
         }
+        else if (value.isPressed && wallInteract.onWall)
+        {
+            Debug.Log("Wall Climb"); 
+        }
+    }
+
+    void OnClimb(InputValue value)
+    {
+        climbInput = value.Get<Vector2>();
     }
 
     void CancelJumpAnimation()
@@ -115,4 +145,21 @@ public class PlayerMovement : MonoBehaviour
             jumpCount = 0;
         }
     } 
+
+    void Climb()
+    {
+        if(wallInteract == null) { return; }
+
+        if (wallInteract.onWall)
+        {
+            animator.SetBool("IsClimbing", true);
+            currentClimbInputVector = Vector2.SmoothDamp(currentClimbInputVector, climbInput, ref smoothClimbInputVelocity, smoothClimbInputSpeed);
+            Vector2 playerVelocity = new Vector2(rb2d.velocity.x, currentClimbInputVector.y * climbSpeed *  Time.fixedDeltaTime);
+            rb2d.velocity = playerVelocity;
+        }
+        else if(!wallInteract.onWall)
+        {
+            animator.SetBool("IsClimbing", false);
+        }
+    }
 }
