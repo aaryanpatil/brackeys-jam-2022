@@ -14,6 +14,7 @@ public class Player2Movement : MonoBehaviour
     [SerializeField] float jumpForce = 700f;
     int jumpCount = 1;
 
+    [SerializeField] LayerMask playerLayer;
     Vector2 moveInput;
     Vector2 climbInput;
 
@@ -126,6 +127,10 @@ public class Player2Movement : MonoBehaviour
         {
             jumpCount = 1;
             animator.SetBool("IsJumping", false);
+        }
+        if (other.gameObject.CompareTag("Ice"))
+        {
+            Debug.Log("Yellow On Ice");
         }
     } 
 
