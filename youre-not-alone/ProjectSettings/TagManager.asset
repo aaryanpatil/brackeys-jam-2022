@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Ice
+  - Interactables
   layers:
   - Default
   - TransparentFX
@@ -54,6 +55,9 @@ TagManager:
     locked: 0
   - name: Ice
     uniqueID: 3609122379
+    locked: 0
+  - name: Interactables
+    uniqueID: 805558105
     locked: 0
   - name: Player 1
     uniqueID: 2279558753

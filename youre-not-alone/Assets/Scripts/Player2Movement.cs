@@ -123,7 +123,7 @@ public class Player2Movement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Interactables"))
         {
             jumpCount = 1;
             animator.SetBool("IsJumping", false);
@@ -136,7 +136,7 @@ public class Player2Movement : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other) 
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Interactables"))
         {
             jumpCount = 1;
             animator.SetBool("IsJumping", false);
@@ -145,7 +145,7 @@ public class Player2Movement : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other) 
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Interactables"))
         {
             jumpCount = 0;
         }
