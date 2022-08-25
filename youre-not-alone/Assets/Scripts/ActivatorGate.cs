@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Activator : MonoBehaviour
-{
+public class ActivatorGate : MonoBehaviour
+{   
     Animator animator;
+
     void Awake() 
-    {   
+    {
         animator = GetComponent<Animator>();
     }
 
@@ -15,15 +16,20 @@ public class Activator : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            animator.SetBool("IsPressed", true);
-        }   
+            Debug.Log("Player Crushed");
+        }    
     }
 
-    void OnTriggerExit2D(Collider2D other) 
+    public void GateDeactivated(bool isDeactivated)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if(isDeactivated)
         {
-            animator.SetBool("IsPressed", false);
-        }   
+            animator.speed = 0;
+        }
+        else
+        {
+            animator.speed = 1;
+        }
     }
 }
+
