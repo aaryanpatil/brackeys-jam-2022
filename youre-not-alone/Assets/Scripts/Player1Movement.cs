@@ -47,6 +47,7 @@ public class Player1Movement : MonoBehaviour
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+        Debug.Log("Blue IP");
     }
 
     void Run()
