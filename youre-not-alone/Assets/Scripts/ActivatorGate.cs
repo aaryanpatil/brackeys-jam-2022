@@ -6,6 +6,7 @@ using UnityEngine;
 public class ActivatorGate : MonoBehaviour
 {   
     Animator animator;
+    [SerializeField] Animator childAnimator;
 
     void Awake() 
     {
@@ -25,10 +26,12 @@ public class ActivatorGate : MonoBehaviour
         if(isDeactivated)
         {
             animator.speed = 0;
+            childAnimator.SetBool("Deactivated", true);
         }
         else
         {
             animator.speed = 1;
+            childAnimator.SetBool("Deactivated", false);
         }
     }
 }
