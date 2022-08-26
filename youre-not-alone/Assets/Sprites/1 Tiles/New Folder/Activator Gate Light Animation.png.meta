@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c735f133a44e3174ba7a1085f6dfdc00
+guid: dbf31170a7d02864897c29cb53d557d5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -116,7 +116,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Screen1_0
+      name: Activator Gate Light Animation_0
       rect:
         serializedVersion: 2
         x: 0
@@ -130,14 +130,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8822e6412a66d79458ea3625ac18f18d
-      internalID: -1227251247
+      spriteID: 88ec9fbc0480ea54d8a14d99c1b50e05
+      internalID: 153917149
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Screen1_1
+      name: Activator Gate Light Animation_1
       rect:
         serializedVersion: 2
         x: 32
@@ -151,14 +151,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c692ac1887a135a4dbb7c291d58563db
-      internalID: 1504431912
+      spriteID: 7e77f24b2a144e54f940a51c9451354b
+      internalID: 2046542427
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Screen1_2
+      name: Activator Gate Light Animation_2
       rect:
         serializedVersion: 2
         x: 64
@@ -172,29 +172,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60c2f98436f0ff3449cb8ce004c0e976
-      internalID: 1546093433
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Screen1_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 32b20e1a957f80a47bbe92fcfcbc7af0
-      internalID: -838604494
+      spriteID: 6c867f7178742df498a6949c2110da69
+      internalID: 473008606
       vertices: []
       indices: 
       edges: []
@@ -210,10 +189,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Screen1_1: 1504431912
-      Screen1_0: -1227251247
-      Screen1_3: -838604494
-      Screen1_2: 1546093433
+      Activator Gate Light Animation_1: 2046542427
+      Activator Gate Light Animation_2: 473008606
+      Activator Gate Light Animation_0: 153917149
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
