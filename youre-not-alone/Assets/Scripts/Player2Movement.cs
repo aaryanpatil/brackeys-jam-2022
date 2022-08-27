@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,12 +10,16 @@ public class Player2Movement : MonoBehaviour
     [SerializeField] private float smoothInputSpeed = 0.08f;
     [SerializeField] private float smoothClimbInputSpeed = 0.04f;
     [SerializeField] float climbSpeed = 400f;
+    [SerializeField] float frozenRunSpeed = 0f;
+    [SerializeField] float normalRunSpeed = 400f;
 
     [Header("Jumping")]
     [SerializeField] float jumpForce = 700f;
     int jumpCount = 1;
 
     [SerializeField] LayerMask playerLayer;
+
+    [SerializeField] float freezeDelay;
     Vector2 moveInput;
     Vector2 climbInput;
 
@@ -126,6 +131,7 @@ public class Player2Movement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Interactables"))
         {
+            
             jumpCount = 1;
             animator.SetBool("IsJumping", false);
         }
@@ -133,7 +139,20 @@ public class Player2Movement : MonoBehaviour
         {
             Debug.Log("Yellow On Ice");
         }
+        
+        if (other.gameObject.CompareTag("Ice"))
+        {
+            
+            StartCoroutine(FreezePlayer());
+            animator.SetBool("IsFrozen", true);
+        }
     } 
+
+    IEnumerator FreezePlayer()
+    {
+        yield return new WaitForSecondsRealtime(freezeDelay);
+        runSpeed = frozenRunSpeed;
+    }
 
     void OnTriggerStay2D(Collider2D other) 
     {
@@ -149,6 +168,12 @@ public class Player2Movement : MonoBehaviour
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Interactables"))
         {
             jumpCount = 0;
+        }
+
+        if (other.gameObject.CompareTag("Ice"))
+        {
+            runSpeed = normalRunSpeed;
+            animator.SetBool("IsFrozen", false);
         }
     } 
 
