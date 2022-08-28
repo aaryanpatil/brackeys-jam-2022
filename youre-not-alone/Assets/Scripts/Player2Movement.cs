@@ -20,6 +20,7 @@ public class Player2Movement : MonoBehaviour
     [SerializeField] LayerMask playerLayer;
 
     [SerializeField] float freezeDelay;
+
     Vector2 moveInput;
     Vector2 climbInput;
 
@@ -33,6 +34,7 @@ public class Player2Movement : MonoBehaviour
     Animator animator;
 
     WallInteract wallInteract;
+    Player1Movement player1;
     
 
     void Awake() 
@@ -41,14 +43,23 @@ public class Player2Movement : MonoBehaviour
         feetCollider = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
         wallInteract = GetComponent<WallInteract>();
+        player1 = FindObjectOfType<Player1Movement>();
     }
+
+    void Start() 
+    {
+        runSpeed = normalRunSpeed;    
+    }
+
     void FixedUpdate()
     { 
+        if (player1.isPaused) { return; }
         Run();
     }
 
     private void Update() 
     {
+        if (player1.isPaused) { return; }
         FlipSprite();
         CancelJumpAnimation();
         if (wallInteract == null) { return; }
@@ -97,9 +108,10 @@ public class Player2Movement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
+        if (player1.isPaused) { return; }
         if(wallInteract.onWall) { return; }
 
-        if (value.isPressed && jumpCount == 1 && !wallInteract.onWall)
+        if (value.isPressed && jumpCount == 1 && !wallInteract.onWall && runSpeed != 0)
         {
             rb2d.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             animator.SetBool("IsJumping", true);
@@ -134,15 +146,16 @@ public class Player2Movement : MonoBehaviour
             
             jumpCount = 1;
             animator.SetBool("IsJumping", false);
-        }
-        if (other.gameObject.CompareTag("Ice"))
-        {
-            Debug.Log("Yellow On Ice");
-        }
-        
-        if (other.gameObject.CompareTag("Ice"))
-        {
             
+        }
+
+        if (other.gameObject.CompareTag("Interactables"))
+        {  
+            runSpeed = normalRunSpeed;
+        }
+
+        if (other.gameObject.CompareTag("Ice"))
+        {  
             StartCoroutine(FreezePlayer());
             animator.SetBool("IsFrozen", true);
         }
@@ -152,6 +165,7 @@ public class Player2Movement : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(freezeDelay);
         runSpeed = frozenRunSpeed;
+        jumpCount = 0;
     }
 
     void OnTriggerStay2D(Collider2D other) 
@@ -192,5 +206,11 @@ public class Player2Movement : MonoBehaviour
         {
             animator.SetBool("IsClimbing", false);
         }
+    }
+
+    public void DisableInputs()
+    {
+        runSpeed = 0;
+        animator.SetBool("IsRunning", false);
     }
 }

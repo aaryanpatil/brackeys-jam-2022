@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,7 @@ public class Player1Movement : MonoBehaviour
     [Header("Horizontal Movement")]
 
     [SerializeField] float runSpeed = 400f;
+    [SerializeField] float normalRunSpeed = 400f;
     [SerializeField] private float normalSmoothInputSpeed = 0.08f;
     [SerializeField] private float slowSmoothInputSpeed = 0.08f;
     [SerializeField] private float smoothInputSpeed = 0.08f;
@@ -14,6 +16,7 @@ public class Player1Movement : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] float jumpForce = 700f;
     int jumpCount = 1;
+    public bool isPaused = false;
 
     Vector2 moveInput;
     Vector2 climbInput;
@@ -26,20 +29,30 @@ public class Player1Movement : MonoBehaviour
     CircleCollider2D feetCollider;
     Animator animator;
     
+    PauseMenu pauseMenu;
 
     void Awake() 
     {
         rb2d = GetComponent<Rigidbody2D>();
         feetCollider = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
+        pauseMenu = FindObjectOfType<PauseMenu>();
     }
+
+    void Start() 
+    {
+        runSpeed = normalRunSpeed;    
+    }
+
     void FixedUpdate()
     { 
+        if (isPaused) { return; }
         Run();
     }
 
     private void Update() 
     {
+        if (isPaused) { return; }
         FlipSprite();
         CancelJumpAnimation();
     }
@@ -52,6 +65,7 @@ public class Player1Movement : MonoBehaviour
 
     void Run()
     {
+        if (isPaused) { return; }
         currentInputVector = Vector2.SmoothDamp(currentInputVector, moveInput, ref smoothInputVelocity, smoothInputSpeed);
         Vector2 playerVelocity = new Vector2(currentInputVector.x * runSpeed *  Time.fixedDeltaTime, rb2d.velocity.y);
         rb2d.velocity = playerVelocity;
@@ -77,6 +91,8 @@ public class Player1Movement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
+        if (isPaused) { return; }
+
         if (value.isPressed && jumpCount == 1)
         {
             rb2d.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
@@ -133,4 +149,16 @@ public class Player1Movement : MonoBehaviour
             jumpCount = 0;
         }
     } 
+
+    public void DisableInputs()
+    {
+        runSpeed = 0;
+        animator.SetBool("IsRunning", false);
+    }
+
+    void OnPause()
+    {
+        isPaused = !isPaused;
+        pauseMenu.DisplayPauseMenu();
+    }
 }
