@@ -2,15 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class ActivatorGate : MonoBehaviour
 {   
     Animator animator;
     [SerializeField] Animator childAnimator;
+    [SerializeField] float delayStartUpTime;
 
     void Awake() 
     {
         animator = GetComponent<Animator>();
+    }
+
+    void Start()
+    {
+        animator.enabled = false;
+        StartCoroutine(DelayStartUp());
+    }
+
+    IEnumerator DelayStartUp()
+    {
+        yield return new WaitForSecondsRealtime(delayStartUpTime * 1.283f);
+        animator.enabled = true;
     }
 
     void OnTriggerEnter2D(Collider2D other) 
@@ -18,6 +33,8 @@ public class ActivatorGate : MonoBehaviour
         if (other.gameObject.CompareTag("Player1") || other.gameObject.CompareTag("Player2"))
         {
             Debug.Log("Player Crushed");
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentSceneIndex);
         }    
     }
 

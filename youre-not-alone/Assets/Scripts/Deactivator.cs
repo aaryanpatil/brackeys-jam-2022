@@ -9,7 +9,7 @@ public class Deactivator : MonoBehaviour
 
     bool isActivated;
 
-    [SerializeField] ActivatorGate activatorGate;
+    [SerializeField] List<ActivatorGate> activatorGate;
 
     void Awake() 
     {   
@@ -22,7 +22,10 @@ public class Deactivator : MonoBehaviour
         {
             animator.SetBool("IsPressed", true);
             isActivated = true;
-            activatorGate.GateDeactivated(isActivated);
+            for (int i = 0; i < activatorGate.Count; i++)
+            {
+                activatorGate[i].GateDeactivated(isActivated);
+            }
         }   
     }
 
@@ -33,7 +36,10 @@ public class Deactivator : MonoBehaviour
             animator.SetBool("IsPressed", false);
 
             isActivated = false;
-            activatorGate.GateDeactivated(isActivated);
+            for (int i = 0; i < activatorGate.Count; i++)
+            {
+                activatorGate[i].GateDeactivated(isActivated);
+            }
         }   
     }
 }
