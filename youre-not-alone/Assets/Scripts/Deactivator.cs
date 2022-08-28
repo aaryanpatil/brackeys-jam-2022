@@ -18,7 +18,7 @@ public class Deactivator : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player1") || other.gameObject.CompareTag("Player2"))
         {
             animator.SetBool("IsPressed", true);
             isActivated = true;
@@ -28,7 +28,7 @@ public class Deactivator : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other) 
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player1") || other.gameObject.CompareTag("Player2"))
         {
             animator.SetBool("IsPressed", false);
 

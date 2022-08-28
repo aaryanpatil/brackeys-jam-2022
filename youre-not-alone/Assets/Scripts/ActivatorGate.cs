@@ -15,7 +15,7 @@ public class ActivatorGate : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player1") || other.gameObject.CompareTag("Player2"))
         {
             Debug.Log("Player Crushed");
         }    
